@@ -29,12 +29,12 @@ userController.prototype.post = async (req, res) => {
     const emailExist = await _repo.isEmailExist(req.body.email);
     if (emailExist) {
       _validationContract.isTrue(
-        emailExist.name !== undefined,
+        emailExist.email !== undefined,
         `Já existe o email ${emailExist.email} cadastrado`
       );
     }
     const salt = await bcrypt.genSaltSync(10);
-    req.body.senha = await bcrypt.hashSync(req.body.password, salt);
+    req.body.password = await bcrypt.hashSync(req.body.password, salt);
     ctrlBase.post(_repo, _validationContract, req, res);
   } catch (e) {
     res.status(500).send({ message: 'Internal server error', error: e });
@@ -66,7 +66,7 @@ userController.prototype.put = async (req, res) => {
       );
     }
     const salt = await bcrypt.genSaltSync(10);
-    req.body.senha = await bcrypt.hashSync(req.body.password, salt);
+    req.body.password = await bcrypt.hashSync(req.body.password, salt);
     ctrlBase.put(_repo, _validationContract, req, res);
   } catch (e) {
     res.status(500).send({ message: 'Internal server error', error: e });
@@ -74,7 +74,7 @@ userController.prototype.put = async (req, res) => {
 };
 
 userController.prototype.get = async (req, res) => {
-  ctrlBase.get(req, res);
+  ctrlBase.get(_repo, req, res);
 };
 
 userController.prototype.delete = async (req, res) => {

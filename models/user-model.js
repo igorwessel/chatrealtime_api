@@ -1,6 +1,6 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const mongoose = require('mongoose').set('debug', true);
 const schema = mongoose.Schema;
 const { ObjectId } = mongoose.Schema;
 

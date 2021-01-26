@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     try {
       let decoded = jwt.verify(token, variables.Security.secretKey);
       req.userLogged = decoded;
-      const userExist = await user.findById(req.userLogged._id);
+      const userExist = await user.findById(req.userLogged.user._id);
 
       if (!userExist) {
         res.status(401).send({ message: 'Usuario não existe' });

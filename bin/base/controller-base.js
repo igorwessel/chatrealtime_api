@@ -46,7 +46,7 @@ exports.put = async (repository, validationContract, req, res) => {
   }
 };
 
-exports.get = async (repository, validationContract, req, res) => {
+exports.get = async (repository, req, res) => {
   try {
     let result = await repository.getAll();
 
@@ -56,16 +56,12 @@ exports.get = async (repository, validationContract, req, res) => {
   }
 };
 
-exports.delete = async (repository, validationContract, req, res) => {
+exports.delete = async (repository, req, res) => {
   try {
     const id = req.params.id;
     if (id) {
       let result = await repository.delete(id, req.userLogged);
-      if (result !== 'Operacao invalida') {
-        res.status(401).send({ message: 'Operacao invalida' });
-      } else {
-        res.status(200).send({ message: 'Registro excluido com sucesso.' });
-      }
+      res.status(200).send({ message: 'Registro excluido com sucesso.' });
     } else {
       res.status(500).send({ message: 'O parametro id precisa ser informado' });
     }
