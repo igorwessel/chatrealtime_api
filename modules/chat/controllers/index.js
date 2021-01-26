@@ -37,6 +37,36 @@ chatController.prototype.post = async (req, res) => {
   }
 };
 
+chatController.prototype.deleteMessage = async (req, res) => {
+  try {
+    const { userLOgged, params } = req;
+    const { user } = userLOgged;
+    const { id, messageId } = params;
+    const { _id } = user;
+    const validationContract = new validation();
+
+    validationContract.isRequired(id, 'O id do chat é obrigatorio');
+    if (!validationContract.isValid()) {
+      res
+        .status(400)
+        .send({
+          message: 'Existem dados inválidos na sua requisição',
+          validation: validationContract.errors(),
+        })
+        .end();
+      return;
+    }
+    const resultado = await _repo.deleteMessage(id, messageId, _id);
+    if (resultado !== 'Operação inválida') {
+      res.status(202).send({ message: 'Mensagem excluida com sucesso' });
+    } else {
+      res.status(401).send({ message: 'Não foi possível apagar mensagem' });
+    }
+  } catch (erro) {
+    res.status(500).send({ message: 'Erro no processamento', error: erro });
+  }
+};
+
 chatController.prototype.sendMessage = async (req, res) => {
   const _validationContract = new ValidationContract();
   const { userLogged, io, connectedUsers, body, params } = req;
