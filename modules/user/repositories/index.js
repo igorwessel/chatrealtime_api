@@ -1,5 +1,5 @@
 require('../models');
-const base = require('../../bin/base/repository-base');
+const base = require('../../../bin/base/repository-base');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
