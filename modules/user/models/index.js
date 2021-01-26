@@ -28,6 +28,7 @@ userModel.pre('save', (next) => {
   const now = new Date();
   const nowv = new Date(moment().add(7, 'days')._d.toISOString());
   if (!this.createdAt) this.createdAt = now;
+  if (!this.payDay) this.payDay = nowv;
   next();
 });
 
