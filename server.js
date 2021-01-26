@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 
 const app = express();
 const server = require('http').Server(app);
-const variables = require('bin/configuration/variables');
-const userRouter = require('modules/user/routes');
-const chatRouter = require('modules/chat/routes');
+const variables = require('./bin/configuration/variables');
+const userRouter = require('./modules/user/routes');
+const chatRouter = require('./modules/chat/routes');
 const io = require('socket.io')(server);
 
 const connectedUsers = {};
@@ -31,6 +31,7 @@ mongoose.connect(variables.Database.connection, {
 });
 
 app.use('/api/user', userRouter);
+app.use('/api/chat', chatRouter);
 
 server.listen(port, () => {
   io.on('connection', (socket) => {
