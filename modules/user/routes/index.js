@@ -10,9 +10,11 @@ let _ctrl = new controller();
 router.post('/register', _ctrl.post);
 router.post('/authenticate', _ctrl.authenticate);
 
+router.put('/completeRegister', _ctrl.completeRegister);
+
 router.get('/', auth, _ctrl.get);
 router.get('/page/:page', auth, _ctrl.getByPage);
-router.put('/', auth, _ctrl.put);
+router.put('/:id', auth, _ctrl.put);
 router.delete('/:id', auth, _ctrl.delete);
 
 module.exports = router;
