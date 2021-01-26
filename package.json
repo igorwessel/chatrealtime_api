@@ -2,7 +2,7 @@
   "name": "chatrealtime_api",
   "version": "1.0.0",
   "description": "\"API para Primeiro chatRealTime\"",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "git@github.com:igorwessel/chatrealtime_api.git",
   "author": "Igor Wessel <igor_wessel@hotmail.com>",
   "license": "MIT",
