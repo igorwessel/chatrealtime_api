@@ -1,11 +1,11 @@
 'use strict';
 
-const repository = require('../repositories/user-repository');
-const validation = require('../bin/helpers/validation');
-const ctrlBase = require('../bin/base/controller-base');
+const repository = require('../repositories');
+const validation = require('../../../bin/helpers/validation');
+const ctrlBase = require('../../../bin/base/controller-base');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const variables = require('../bin/configuration/variables');
+const variables = require('../../../bin/configuration/variables');
 const _repo = new repository();
 
 function userController() {}
@@ -120,6 +120,31 @@ userController.prototype.authenticate = async (req, res) => {
     res
       .status(404)
       .send({ message: 'Usuario ou senha informados são invalidos' });
+  }
+};
+
+userController.prototype.getByPage = async (req, res) => {
+  const _validationContract = new validation();
+  const { params } = req;
+  const { page } = params;
+  _validationContract.isRequired(page, 'Número da pagina obrigatorio');
+
+  if (!_validationContract.isValid()) {
+    res
+      .status(400)
+      .send({
+        message: 'Não foi possivel pegar a pagina',
+        validation: _validationContract.errors(),
+      })
+      .end();
+    return;
+  }
+
+  try {
+    const result = await _repo.getByPage(page);
+    res.status(200).send(result);
+  } catch (e) {
+    res.status(500).send({ message: 'Internal server error', error: e });
   }
 };
 

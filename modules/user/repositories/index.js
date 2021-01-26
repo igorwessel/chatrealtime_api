@@ -1,5 +1,5 @@
-require('../models/user-model');
-const base = require('../bin/base/repository-base');
+require('../models');
+const base = require('../../bin/base/repository-base');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -72,6 +72,19 @@ class userRepository {
   }
   async delete(id) {
     return await this._base.delete(id);
+  }
+
+  async getByPage(page) {
+    const users = await this._base._model
+      .find({ type: 'client' }, this._projection)
+      .skip((page - 1) * 10)
+      .limit(10)
+      .sort({ createdAt: -1 });
+    const usersCount = await this._base._model
+      .find({ type: 'client' }, this._projection)
+      .count();
+
+    return { users, usersCount };
   }
 }
 
