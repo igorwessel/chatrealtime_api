@@ -86,6 +86,15 @@ class userRepository {
 
     return { users, usersCount };
   }
+
+  async completeRegister(data, userid) {
+    await this._base.update(userid, data);
+    const userR = await this._base._model.findOne(
+      { _id: userid },
+      this._projection
+    );
+    return userR;
+  }
 }
 
 module.exports = userRepository;

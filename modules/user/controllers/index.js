@@ -148,4 +148,30 @@ userController.prototype.getByPage = async (req, res) => {
   }
 };
 
+userController.prototype.completeRegister = async (req, res) => {
+  try {
+    const _validationContract = new validation();
+    _validationContract.isRequired(req.body.cpf, 'Informe seu cpf pentelho');
+    _validationContract.isRequired(
+      req.body.phone,
+      'Informe seu phone pentelho'
+    );
+    if (!_validationContract.isValid()) {
+      req
+        .status(400)
+        .send({
+          message: 'Existem dados inválido na sua requisição',
+          validation: _validationContract.errors(),
+        })
+        .end();
+      return;
+    }
+    const data = req.body;
+    const user = await _repo.completeRegister(data, req.userLogged.user._id);
+    res.status(200).send(user);
+  } catch (e) {
+    res.status(500).send({ message: 'Internal server error', error: e });
+  }
+};
+
 module.exports = userController;
