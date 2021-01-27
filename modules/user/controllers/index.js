@@ -141,7 +141,7 @@ userController.prototype.getByPage = async (req, res) => {
   }
 
   try {
-    const result = await _repo.getByPage(page);
+    const result = await _repo.getByPage(parseInt(page));
     res.status(200).send(result);
   } catch (e) {
     res.status(500).send({ message: 'Internal server error', error: e });

@@ -76,12 +76,12 @@ class userRepository {
 
   async getByPage(page) {
     const users = await this._base._model
-      .find({ type: 'client' }, this._projection)
+      .find({}, this._projection)
       .skip((page - 1) * 10)
       .limit(10)
       .sort({ createdAt: -1 });
     const usersCount = await this._base._model
-      .find({ type: 'client' }, this._projection)
+      .find({}, this._projection)
       .count();
 
     return { users, usersCount };
