@@ -101,7 +101,7 @@ chatController.prototype.sendMessage = async (req, res) => {
       }
 
       const userSocket = connectedUsers[userId];
-      console.log('[USER.SOCKET]: ' + userSocket);
+      console.log('[USER.SOCKET]: ', userSocket);
       if (userSocket) {
         const msg = {
           _id: new Date().getTime(),
@@ -109,8 +109,8 @@ chatController.prototype.sendMessage = async (req, res) => {
           createdAt: new Date(),
           user: { _id, name },
         };
-        
-        console.log('[USER.SOCKET.ID]: '+ userId);
+
+        console.log('[USER.SOCKET.ID]: ', userId);
 
         io.to(userId).emit('response', msg);
       }
