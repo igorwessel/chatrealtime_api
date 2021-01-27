@@ -14,6 +14,7 @@ const userModel = new schema(
     cpf: { type: String },
     phone: { type: String },
     password: { type: String },
+    type: { type: String, default: 'client' },
     payDay: {
       type: Date,
       default: new Date(moment().add(7, 'days')._d.toISOString()),
