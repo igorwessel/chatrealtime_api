@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 class userRepository {
   constructor() {
     this._base = new base('User');
-    this._projection = 'nome email';
+    this._projection = 'name email payDay type cpf phone';
   }
 
   async authenticate(email, password, flag) {
