@@ -91,7 +91,7 @@ chatController.prototype.sendMessage = async (req, res) => {
 
   try {
     const result = await _repo.sendMessage(id, text, _id);
-    console.log('[CONNECTED.USERS]: ' + connectedUsers);
+    console.log('[CONNECTED.USERS]: ', connectedUsers);
     if (connectedUsers) {
       let userId;
       if (result.userRecipient.toString() === _id) {
