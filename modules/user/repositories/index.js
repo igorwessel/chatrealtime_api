@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 class userRepository {
   constructor() {
     this._base = new base('User');
-    this._projection = 'nome email';
+    this._projection = 'name email payDay type cpf phone';
   }
 
   async authenticate(email, password, flag) {
@@ -76,12 +76,12 @@ class userRepository {
 
   async getByPage(page) {
     const users = await this._base._model
-      .find({}, this._projection)
+      .find({ type: 'client'}, this._projection)
       .skip((page - 1) * 10)
       .limit(10)
       .sort({ createdAt: -1 });
     const usersCount = await this._base._model
-      .find({}, this._projection)
+      .find({ type: 'client'}, this._projection)
       .count();
 
     return { users, usersCount };
