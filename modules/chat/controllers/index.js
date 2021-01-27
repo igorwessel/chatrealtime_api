@@ -91,6 +91,7 @@ chatController.prototype.sendMessage = async (req, res) => {
 
   try {
     const result = await _repo.sendMessage(id, text, _id);
+    console.log('[CONNECTED.USERS]: ' + connectedUsers);
     if (connectedUsers) {
       let userId;
       if (result.userRecipient.toString() === _id) {
@@ -100,6 +101,7 @@ chatController.prototype.sendMessage = async (req, res) => {
       }
 
       const userSocket = connectedUsers[userId];
+      console.log('[USER.SOCKET]: ' + userSocket);
       if (userSocket) {
         const msg = {
           _id: new Date().getTime(),
@@ -107,6 +109,8 @@ chatController.prototype.sendMessage = async (req, res) => {
           createdAt: new Date(),
           user: { _id, name },
         };
+        
+        console.log('[USER.SOCKET.ID]: '+ userId);
 
         io.to(userId).emit('response', msg);
       }
