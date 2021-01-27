@@ -35,6 +35,7 @@ app.use('/api/chat', chatRouter);
 
 server.listen(port, () => {
   io.on('connection', (socket) => {
+    console.log('[SOCKER.USER]: ' + socket.handshake.query)
     const { user_id } = socket.handshake.query;
     connectedUsers[user_id] = socket.id;
   });
